@@ -1,5 +1,5 @@
-{
-  date  :  "2014-06-09",
-  hour  :  0,
-  temperature  :  19.3
+function Measurement(temperature) {
+  this.date = null;
+  this.hour = null;
+  this.temperature = temperature;
 }
