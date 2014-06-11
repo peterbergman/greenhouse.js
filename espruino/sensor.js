@@ -1,13 +1,17 @@
 function Sensor() {
   var ow = new OneWire(A1);
   this.sensorConnection = require("DS18B20").connect(ow);
-  this.interval = setInterval(function() {
-    var measurement = new Measurement(sensor.getTemp());
-    console.log(measurement);
-  }, 1000);
   Sensor.prototype.stop = function() {
     clearInterval(this.interval);
   }
+  Sensor.prototype.sendData = function(data) {
+    console.log(data);
+  }
+  Sensor.prototype.doMeasure = function() {
+    var measurement = new Measurement(sensor.getTemp());
+    Sensor.prototype.sendData(measurement);
+  }
+  this.interval = setInterval(this.doMeasure, 1000);
 }
 
 function Measurement(temperature) {
