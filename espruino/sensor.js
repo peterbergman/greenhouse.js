@@ -8,7 +8,7 @@ function Sensor() {
     console.log(data);
   }
   Sensor.prototype.doMeasure = function() {
-    var measurement = new Measurement(sensor.getTemp());
+    var measurement = new Measurement(sensorConnection.getTemp());
     Sensor.prototype.sendData(measurement);
   }
   this.interval = setInterval(this.doMeasure, 1000);
