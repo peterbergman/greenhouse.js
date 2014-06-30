@@ -4,17 +4,9 @@
     <property name="app.dir" location="web/app" />
     <!--Global properties end-->
 
-    <target name="clean">
-        <delete dir="${build.dir}"/>
-    </target>
-
-    <target name="setup">
-      <mkdir dir="${build.dir}"/>
-    </target>
-
     <target name="move">
         <move todir="/srv/app">
-          <fileset dir="${build.dir}/${app.dir}"/>
+          <fileset dir="${app.dir}"/>
         </move>
     </target>
 </project>
