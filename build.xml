@@ -4,6 +4,10 @@
     <property name="app.dir" location="web/app" />
     <!--Global properties end-->
 
+    <target name="clean">
+        <delete dir="/srv/app"/>
+    </target>
+
     <target name="move">
         <move todir="/srv/app">
           <fileset dir="${app.dir}"/>
