@@ -23,6 +23,7 @@
     <target name="install">
       <exec executable="npm">
         <arg value="install"/>
+        <arg value="-g"/>
         <arg value="/srv/app"/>
       </exec>
     </target>
