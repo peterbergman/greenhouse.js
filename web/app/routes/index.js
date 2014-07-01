@@ -24,12 +24,13 @@ router.get('/measurements/startDate/:startDate', function(req, res) {
 });
 
 router.get('/measurements', function(req, res) {
-  res.send(501, {'error' : 'not implemented yet'});
+  Measurement.find(function(err, measurements, count){
+    res.send(measurements);
+  });
 });
 
 router.get('/measurements/startDate/:startDate/endDate/:endDate', function(req, res) {
-  var measurements = [];
-  res.send(measurements);
+  res.send(501, {'error' : 'not implemented yet'});
 });
 
 router.post('/measurement', function(req, res){
