@@ -28,7 +28,7 @@ router.get('/measurements/startDate/:startDate', function(req, res) {
       measurements[i].date = getCorrectDate(measurements[i].date);
       responseMeasurements.push(measurements[i]);
     }
-    res.send(responseMeasurements);
+    res.jsonp(responseMeasurements);
   });
 });
 
@@ -56,7 +56,6 @@ router.get('/measurements', function(req, res) {
   });
 });
 
-
 router.post('/measurement', function(req, res){
   var date = new Date();
   console.log(date);
@@ -68,7 +67,7 @@ router.post('/measurement', function(req, res){
     if(err) {
       res.send({'error' : err});
     } else {
-      res.send(201, {'message' : 'created successfully!'});
+      res.send(201, {'message' : 'created successfully'});
     }
   });
 });
