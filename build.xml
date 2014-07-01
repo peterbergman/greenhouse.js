@@ -21,9 +21,11 @@
     </target>
 
     <target name="install">
+      <mkdir dir="/srv/app/node_modules"/>
       <exec executable="npm">
         <arg value="install"/>
-        <arg value="-g"/>
+        <arg value="--prefix"/>
+        <arg value="/srv/app"/>
         <arg value="/srv/app"/>
       </exec>
     </target>
