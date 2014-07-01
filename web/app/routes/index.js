@@ -57,8 +57,7 @@ router.get('/measurements', function(req, res) {
 });
 
 router.post('/measurement', function(req, res){
-  var date = new Date();
-  console.log(date);
+  var date = req.body.date ? new Date(req.body.date) : new Date();
   var hour = date.getHours();
   var temperature = req.body.temperature;
   var newMeasurement = new Measurement({"hour": hour, "date": date, "temperature": temperature});
