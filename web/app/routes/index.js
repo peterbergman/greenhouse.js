@@ -1,20 +1,22 @@
 var express = require('express');
+var mongoose = require('mongoose');
+var Measurement = mongoose.model( 'Measurement' );
 var router = express.Router();
 
 router.get('/', function(req, res) {
-  res.send('nothing yet...');
+  res.render('index', {title : 'greenhouse'});
 });
 
 router.get('/measurements/startDate', function(req, res) {
-  res.send(400, {'error' : 'please supply a start date'});
+  res.send(400, {'error' : 'please specify a start date'});
 });
 
 router.get('/measurements/startDate/endDate', function(req, res) {
-  res.send(400, {'error' : 'please supply a start date and an end date'});
+  res.send(400, {'error' : 'please specify a start date and an end date'});
 });
 
 router.get('/measurements/startDate/:startDate/endDate', function(req, res) {
-  res.send(400, {'error' : 'please supply an end date'});
+  res.send(400, {'error' : 'please specify an end date'});
 });
 
 router.get('/measurements/startDate/:startDate', function(req, res) {
@@ -26,25 +28,23 @@ router.get('/measurements', function(req, res) {
 });
 
 router.get('/measurements/startDate/:startDate/endDate/:endDate', function(req, res) {
-  console.log(req.params);
-  var response = {};
   var measurements = [];
-  var startDate = req.params.startDate;
-  var endDate = req.params.endDate;
-  response.startDate = startDate;
-  response.endDate = endDate;
-  measurements.push(new Measurement(22.3));
-  measurements.push(new Measurement(23.3));
-  measurements.push(new Measurement(24.3));
-  measurements.push(new Measurement(25.3));
-  response.measurements = measurements;
-  res.send(response);
+  res.send(measurements);
 });
 
-function Measurement(temperature) {
-  this.date = null;
-  this.hour = null;
-  this.temperature = temperature;
-}
+router.post('/measurement', function(req, res){
+  var date = new Date();
+  var hour = date.getHours();
+  var temperature = req.body.temperature;
+  var newMeasurement = new Measurement({"hour": hour, "date": date, "temperature": temperature});
+  console.log(newMeasurement);
+  newMeasurement.save(function (err) {
+    if(err) {
+      res.send({'error' : err});
+    } else {
+      res.send(201, {'message' : 'created successfully!'});
+    }
+  });
+});
 
 module.exports = router;
