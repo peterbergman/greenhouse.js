@@ -20,15 +20,10 @@
         </move>
     </target>
 
-    <target name="changedir">
-      <exec executable="cd">
-        <arg value="/srv/app"/>
-      </exec>
-    </target>
-
     <target name="install">
       <exec executable="npm">
         <arg value="install"/>
+        <arg value="/srv/app"/>
       </exec>
     </target>
 
