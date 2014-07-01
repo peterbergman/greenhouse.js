@@ -8,26 +8,23 @@ router.get('/', function(req, res) {
 });
 
 router.get('/measurements/startDate', function(req, res) {
-  res.send(400, {'error' : 'please specify a start date'});
+  res.send(400, {'error' : 'startDate missing'});
 });
 
 router.get('/measurements/startDate/endDate', function(req, res) {
-  res.send(400, {'error' : 'please specify a start date and an end date'});
+  res.send(400, {'error' : 'startDate and endDate missing'});
 });
 
 router.get('/measurements/startDate/:startDate/endDate', function(req, res) {
-  res.send(400, {'error' : 'please specify an end date'});
+  res.send(400, {'error' : 'endDate missing'});
 });
 
 router.get('/measurements/startDate/:startDate', function(req, res) {
-  res.send(501, {'error' : 'not implemented yet'});
-});
-
-router.get('/measurements', function(req, res) {
   var responseMeasurements = [];
-  Measurement.find(function(err, measurements, count){
+  var startDate = req.params.startDate;
+  var endDate = req.params.endDate;
+  Measurement.find({'date' : {'$gte': new Date(startDate)}}, function(err, measurements, count){
     for (i in measurements) {
-
       measurements[i].date = getCorrectDate(measurements[i].date);
       responseMeasurements.push(measurements[i]);
     }
@@ -36,8 +33,29 @@ router.get('/measurements', function(req, res) {
 });
 
 router.get('/measurements/startDate/:startDate/endDate/:endDate', function(req, res) {
-  res.send(501, {'error' : 'not implemented yet'});
+  var responseMeasurements = [];
+  var startDate = req.params.startDate;
+  var endDate = req.params.endDate;
+  Measurement.find({'date' : {'$gte': new Date(startDate), '$lte': new Date(endDate)}}, function(err, measurements, count){
+    for (i in measurements) {
+      measurements[i].date = getCorrectDate(measurements[i].date);
+      responseMeasurements.push(measurements[i]);
+    }
+    res.send(responseMeasurements);
+  });
 });
+
+router.get('/measurements', function(req, res) {
+  var responseMeasurements = [];
+  Measurement.find(function(err, measurements, count){
+    for (i in measurements) {
+      measurements[i].date = getCorrectDate(measurements[i].date);
+      responseMeasurements.push(measurements[i]);
+    }
+    res.send(responseMeasurements);
+  });
+});
+
 
 router.post('/measurement', function(req, res){
   var date = new Date();
