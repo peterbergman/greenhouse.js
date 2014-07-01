@@ -30,7 +30,7 @@
     <target name="start">
       <exec executable="forever">
         <arg value="start"/>
-        <arg value="./srv/app/bin/www"/>
+        <arg value="/srv/app/bin/www"/>
         <arg value="DEBUG=app"/>
       </exec>
     </target>
