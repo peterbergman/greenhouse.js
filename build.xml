@@ -4,6 +4,12 @@
     <property name="app.dir" location="web/app" />
     <!--Global properties end-->
 
+    <target name="stop">
+      <exec executable="forever">
+        <arg value="stopall"/>
+      </exec>
+    </target>
+
     <target name="clean">
         <delete dir="/srv/app"/>
     </target>
@@ -12,5 +18,13 @@
         <move todir="/srv/app">
           <fileset dir="${app.dir}"/>
         </move>
+    </target>
+
+    <target name="start">
+      <exec executable="forever">
+        <arg value="start"/>
+        <arg value="./bin/www"/>
+        <arg value="DEBUG=app"/>
+      </exec>
     </target>
 </project>
