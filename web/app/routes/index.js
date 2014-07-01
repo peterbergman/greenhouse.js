@@ -25,7 +25,7 @@ router.get('/measurements/startDate/:startDate', function(req, res) {
   var endDate = req.params.endDate;
   Measurement.find({'date' : {'$gte': new Date(startDate)}}, function(err, measurements, count){
     for (i in measurements) {
-      measurements[i].date = getCorrectDate(measurements[i].date);
+      measurements[i].date = measurements[i].date;
       responseMeasurements.push(measurements[i]);
     }
     res.jsonp(responseMeasurements);
