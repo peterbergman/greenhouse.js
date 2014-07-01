@@ -1,6 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var Measurement = mongoose.model( 'Measurement' );
+var Measurement = mongoose.model('Measurement');
 var router = express.Router();
 
 router.get('/', function(req, res) {
@@ -24,8 +24,14 @@ router.get('/measurements/startDate/:startDate', function(req, res) {
 });
 
 router.get('/measurements', function(req, res) {
+  var responseMeasurements = [];
   Measurement.find(function(err, measurements, count){
-    res.send(measurements);
+    for (i in measurements) {
+
+      measurements[i].date = getCorrectDate(measurements[i].date);
+      responseMeasurements.push(measurements[i]);
+    }
+    res.send(responseMeasurements);
   });
 });
 
@@ -35,6 +41,7 @@ router.get('/measurements/startDate/:startDate/endDate/:endDate', function(req, 
 
 router.post('/measurement', function(req, res){
   var date = new Date();
+  console.log(date);
   var hour = date.getHours();
   var temperature = req.body.temperature;
   var newMeasurement = new Measurement({"hour": hour, "date": date, "temperature": temperature});
@@ -47,5 +54,10 @@ router.post('/measurement', function(req, res){
     }
   });
 });
+
+function getCorrectDate(wrongDate) {
+  var t = wrongDate.getTime() + (Math.abs(wrongDate.getTimezoneOffset() * 60 * 1000));
+  return new Date(t);
+}
 
 module.exports = router;
