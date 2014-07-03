@@ -1,45 +1,55 @@
-var currentDate = new Date(-1);
+var app = {};
+app.constants = {
+  months : [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ]
+};
+app.data = {
+  points : []
+};
+
 (function getData() {
   $.ajax({
-    url: 'http://ec2-54-88-73-46.compute-1.amazonaws.com:3000/measurements/startDate/2014-07-01',
-    type: 'GET',
-    dataType: 'jsonp',
-    jsonpCallback: 'jsonpCallback'
+    url: "http://ec2-54-88-73-46.compute-1.amazonaws.com:3000/measurements/",
+    type: "GET",
+    dataType: "jsonp",
+    jsonpCallback: "jsonpCallback"
   });
 })();
 
 function renderChart(data) {
-  nv.addGraph(function () {
-      var chart = nv.models.lineChart().margin({
-          top: 30,
-          right: 40,
-          bottom: 50,
-          left: 40
-      }).showLegend(true).tooltipContent(function (key, y, e, graph) {
-          return '<h3>' + key + '</h3>' + '<p>' + e + ' &deg;C at ' + y + '</p>'
-      });
-
-      chart.xAxis.ticks(5).tickFormat(function (d) {
-        return d3.time.format('%H')(new Date(d))
-      });
-      chart.yAxis.tickFormat(d3.format(',.1f'));
-      chart.xScale(d3.time.scale());
-
-      d3.select('#chart1 svg')
-          .datum(data)
-          .transition().duration(500)
-          .call(chart);
-
-      nv.utils.windowResize(chart.update);
-      return chart;
-  });
+  var ctx = $("#chart").get(0).getContext("2d");
+  var chart = new Chart(ctx).Line(data, {pointHitDetectionRadius : 5});
 }
 
 function jsonpCallback(response) {
-  data = [{'values': []}];
+  var data = [];
+  data.labels = [];
+  data.datasets = [{
+            label: "Temperature",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: []
+        }];
   for (i in response) {
-    data[0].values.push({'x': new Date(response[i].date).getTime(), 'y': response[i].temperature});
+    app.data.points.push({"date": new Date(response[i].date), "temperature": response[i].temperature});
+    data.datasets[0].data.push(response[i].temperature);
+    data.labels.push(new Date(response[i].date).getHours() + ":00");
   }
-  data[0].key = 'Temperature';
   renderChart(data);
 }

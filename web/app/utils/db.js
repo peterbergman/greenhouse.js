@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 var Measurement = new Schema(
   {
     "date"    : Date,
-    "hour"    : Number,
     "temperature" : Number
   },
   {

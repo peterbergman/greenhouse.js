@@ -3,17 +3,13 @@
   <head>
     <title>{{ title }}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' type='text/css' />
-    <link rel='stylesheet' href='/stylesheets/nv.d3.css' type='text/css' />
-    <script src='/javascripts/d3.v3.js'></script>
-    <script src='/javascripts/nv.d3.js'></script>
     <script src='/javascripts/jquery.min.js'></script>
+    <script src='/javascripts/chart.js'></script>
     <script src='/javascripts/app.js'></script>
   </head>
   <body>
     <h1>{{ title }}</h1>
     <p>Welcome to the {{ title }}</p>
-    <div id="chart1">
-      <svg style="height: 500px;"></svg>
-    </div>
+    <canvas id="chart" width="800" height="400"></canvas>
   </body>
 </html>
