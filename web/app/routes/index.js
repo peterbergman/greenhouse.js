@@ -41,7 +41,7 @@ router.get('/measurements/startDate/:startDate/endDate/:endDate', function(req, 
       measurements[i].date = getCorrectDate(measurements[i].date);
       responseMeasurements.push(measurements[i]);
     }
-    res.send(responseMeasurements);
+    res.jsonp(responseMeasurements);
   });
 });
 
