@@ -52,7 +52,7 @@ router.get('/measurements', function(req, res) {
       measurements[i].date = getCorrectDate(measurements[i].date);
       responseMeasurements.push(measurements[i]);
     }
-    res.send(responseMeasurements);
+    res.jsonp(responseMeasurements);
   });
 });
 
