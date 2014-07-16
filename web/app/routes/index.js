@@ -61,6 +61,7 @@ router.get("/measurements", function(req, res) {
 });
 
 router.post("/measurement", function(req, res){
+  console.log(req.body);
   var date = req.body.date ? new Date(req.body.date) : new Date();
   var hour = date.getHours();
   var temperature = req.body.temperature;
