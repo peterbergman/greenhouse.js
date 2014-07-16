@@ -61,19 +61,22 @@ router.get("/measurements", function(req, res) {
 });
 
 router.post("/measurement", function(req, res){
-  console.log(req.body);
-  var date = req.body.date ? new Date(req.body.date) : new Date();
-  var hour = date.getHours();
-  var temperature = req.body.temperature;
-  var newMeasurement = new Measurement({"date": date, "temperature": temperature});
-  console.log(date);
-  newMeasurement.save(function (err) {
-    if(err) {
-      res.send({"error" : err});
-    } else {
-      res.send(201, {"message" : "created successfully"});
-    }
-  });
+  if (typeof(req.body.temperature) == "undefined") {
+    res.send(400, {"error" : "temperature missing"});
+  } else {
+    var date = req.body.date ? new Date(req.body.date) : new Date();
+    var hour = date.getHours();
+    var temperature = req.body.temperature;
+    var newMeasurement = new Measurement({"date": date, "temperature": temperature});
+    console.log(date);
+    newMeasurement.save(function (err) {
+      if(err) {
+        res.send({"error" : err});
+      } else {
+        res.send(201, {"message" : "created successfully"});
+      }
+    });  
+  }
 });
 
 function getUTCDate(date) {
