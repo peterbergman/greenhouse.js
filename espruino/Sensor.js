@@ -21,7 +21,7 @@ function Sensor() {
     Sensor.prototype.sendData(measurement); // Need to use the prototype since we are in an interval here
   };
 
-  system.wlan.connect( "Bergman", "F7zIV4u7Ax", function (s) {
+  system.wlan.connect( "Bergman", "?????????", function (s) {
     if (s=="dhcp") {
       if (system.interval) {
         clearInterval(system.interval);
