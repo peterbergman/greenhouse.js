@@ -1,7 +1,7 @@
 greenhouse.js
 =============
 
-A WIP project that turns the Espruino micro-controller into a remote temperature sensor.
+A project (work in progress...) that turns the Espruino micro-controller into a remote temperature sensor.
 
 Project includes:
   - The Javascript code running on the Espruino, reading temperature data and sending it over HTTP to a server.
